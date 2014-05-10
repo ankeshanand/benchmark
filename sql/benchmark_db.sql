@@ -26,7 +26,7 @@ CREATE TABLE md5_log(
 	`db_entries` ENUM('YES', 'NO'),
 	KEY(`md5sum`),
 	KEY(`benchmark_id`),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -41,12 +41,13 @@ CREATE TABLE machine_info(
 	`virtual_addr_size` INT(5),
 	`vendor_id` VARCHAR(100),
 	`ostype` VARCHAR(100),
+  `model_name` VARCHAR(100),
 	KEY(`hostname`),
 	KEY(`cores`),
 	KEY(`ostype`),
 	KEY(`processors`),
 	KEY(`vendor_id`),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE
 );	
 
 CREATE TABLE email_logs(
@@ -73,7 +74,7 @@ CREATE TABLE `rt_moss` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -82,7 +83,7 @@ CREATE TABLE `rt_world` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -91,7 +92,7 @@ CREATE TABLE `rt_star` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -100,7 +101,7 @@ CREATE TABLE `rt_bldg391` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -109,7 +110,7 @@ CREATE TABLE `rt_m35` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -118,7 +119,7 @@ CREATE TABLE `rt_sphflake` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
@@ -128,7 +129,7 @@ CREATE TABLE `rt_average` (
 	`abs_rps` FLOAT,
 	`vgr_rps` FLOAT,
 	`result` ENUM('RIGHT', 'WRONG', 'COMPARISION_FAILURE'),
-	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE,
+	FOREIGN KEY(benchmark_id) REFERENCES benchmark_logs(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	KEY(`result`)
 );
 
