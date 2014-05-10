@@ -1,0 +1,18 @@
+[database]
+host = localhost
+username = root
+password = letmein
+database = benchmark_db
+
+[locations]
+archives = ./archive
+benchmark_root = /home/suryajith/Computing/code/trunk/htdocs/benchmark/
+log = ./log
+queue = /srv/http/queue
+api_url = http://88.198.223.105/wiki/api.php
+
+[imap_credentials]
+imap_server = imap.gmail.com
+imap_port = 993
+username = benchmark.performance.database
+password = letmelogin
