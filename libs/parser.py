@@ -76,7 +76,7 @@ class Parser:
             self.logger.error("File {:s} already exists in the db.".format(self.filename.split('/')[-1]))
         else :
             self.write_to_db()
-            self.archive_file()
+            # self.archive_file()
             self.logger.info("Success: Done writing {:s} to db.".format(self.filename.split('/')[-1]))
     
     
@@ -165,7 +165,8 @@ class Parser:
                 results = re.findall("[0-9]+\.*[0-9]*\s", line, re.I)
                 for test, order in tests_order.items() :
                     accumulator[test] = float(results[order])
-        
+
+        print accumulator
         return accumulator
                 
         
