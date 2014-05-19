@@ -14,7 +14,7 @@ Requirements
 Installation
 ============
 
-* pip install -r requirements.txt (will install django, pillow and mysql-python)
-* python manage.py syncdb
-* python manage.py runserver
-* go to localhost:8000/upload/new/ and upload some files
+* ````pip install -r requirements.txt```` (will install django, pillow and mysql-python)
+* ````python manage.py syncdb````
+* ````python manage.py runserver````
+* go to ````localhost:8000/upload/new/```` and upload some files
