@@ -8,7 +8,7 @@
 <meta name="description" content="Upload your BRL-CAD Benchmark Logs. File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap styles -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap_superhero.min.css">
 <!-- Generic page styles -->
 <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
@@ -23,13 +23,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://github.com/sigurdga/django-jquery-file-upload">BRL-CAD Benchmarks</a>
+            <a class="navbar-brand" href="">BRL-CAD Benchmarks</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="https://github.com/blueimp/jQuery-File-Upload/tags">Upload</a></li>
-                <li><a href="https://github.com/sigurdga/django-jquery-file-upload">Source Code</a></li>
-                <li><a href="https://github.com/blueimp/jQuery-File-Upload/wiki">Documentation</a></li>
+                <li><a href="https://github.com/ankeshanand/benchmark">Source Code</a></li>
+                <li><a href="">Documentation</a></li>
             </ul>
         </div>
     </div>
@@ -45,8 +45,8 @@
     </ul-->
     <br>
     <blockquote>
-        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery.<br>
-        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.</p>
+        <p>Only .log files are allowed, you can drag n drop your files here.<br>
+        Supports cross-domain, chunked and resumable file uploads.</p>
     </blockquote>
     <br>
     <!-- The fileinput-button span is used to style the file input field as button -->
