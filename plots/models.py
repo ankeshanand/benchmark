@@ -22,6 +22,8 @@ class BenchmarkLogs(models.Model):
     results = models.CharField(max_length=765, blank=True)
     compiler_flags = models.TextField(blank=True)
     complete_info = models.TextField(blank=True)
+    def __unicode__(self):
+        return self.machine_desc
     class Meta:
         db_table = u'benchmark_logs'
 
