@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'upload.views.home', name='home'),
 
-    url(r'^$', lambda x: HttpResponseRedirect('/upload/new/')),
+    url(r'^$', lambda x: HttpResponseRedirect('/upload/basic/plus')),
     url(r'^upload/', include('fileupload.urls')),
     url(r'^plots/', include('plots.urls')),
 
