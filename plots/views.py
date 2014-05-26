@@ -7,8 +7,8 @@ from django.http import HttpResponse, Http404
 from .models import BenchmarkLogs, MachineInfo
 
 def rawdata(request, type):
-    if type == "AvgVGRvsProcessor":
-
+    #if type == "AvgVGRvsProcessor":
+    return
 
 def draw(request, type):
     type_dict = {'type': type}
