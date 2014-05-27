@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/highcharts.js"></script>
+</head>
+<body>
+<div id="container" style="width:50%; height:400px"></div>
+</body>
+<script>
+
+$(function () {
+   $(document).ready(function(){
+    var options = {
+        chart: {
+            renderTo: 'container',
+            type: 'bar'
+        },
+        title: {
+            text: "Average VGR Rating VS Processor Families"
+        },
+        xAxis: {
+            title: {
+                text: 'Processor Family'
+            },
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'Average VGR Rating'
+            }
+        },
+        series: [{}]
+    };
+
+   $.getJSON('/plots/{{ plotname }}/data/',function(data){
+       console.log(data);
+       options.xAxis.categories = data.categories;
+       options.series[0] = data.series;
+       var chart = new Highcharts.Chart(options);
+	    });
+   });
+});
+
+</script>
+</html>
