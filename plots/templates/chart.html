@@ -17,20 +17,20 @@ $(function () {
     var options = {
         chart: {
             renderTo: 'container',
-            type: 'bar'
+            type: ''
         },
         title: {
-            text: "Average VGR Rating VS Processor Families"
+            text: ''
         },
         xAxis: {
             title: {
-                text: 'Processor Family'
+                text: ''
             },
             categories: []
         },
         yAxis: {
             title: {
-                text: 'Average VGR Rating'
+                text: ''
             }
         },
         series: [{}]
@@ -38,8 +38,12 @@ $(function () {
 
    $.getJSON('/plots/{{ plotname }}/data/',function(data){
        console.log(data.values);
+       options.chart.type = data.chart_type;
        options.series[0].data = data.values;
        options.xAxis.categories = data.categories;
+       options.title.text = data.chart_title;
+       options.xAxis.title.text = data.xAxis_title_text;
+       options.yAxis.title.text = data.yAxis_title_text;
        Highcharts.setOptions(Highcharts.theme);
        var chart = new Highcharts.Chart(options);
 	    });
