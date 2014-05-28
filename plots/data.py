@@ -10,14 +10,14 @@ def avgVGRvsProcessor():
                  'xAxis_title_text': "Processor Family",
                  'yAxis_title_text': "Average VGR Rating",
                  'categories': [],
-                 'series': []}
+                 'values': []}
 
     distinct_categories_dict = MachineInfo.objects.values('vendor_id').distinct()
     for category in distinct_categories_dict:
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
         approx_vgr_dict =  MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__approx_vgr'))
-        data_dict['series'].append({'data': approx_vgr_dict['benchmark__approx_vgr__avg']})
+        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
         print "poop"
     return data_dict
 
