@@ -3,7 +3,7 @@ from .models import BenchmarkLogs, MachineInfo
 from django.db.models import Sum, Avg
 
 
-def avgVGRvsProcessor():
+def avgVGRvsProcessorFamily():
     data_dict = {'chart_title': "Average VGR Rating vs Processor Family",
                  'chart_type': "bar",
                  'xAxis_title_text': "Processor Family",
@@ -21,3 +21,35 @@ def avgVGRvsProcessor():
 
 #if __name__ == "main":
 #   avgVGRvsProcessor()
+
+
+def avgVGRvsOSType():
+    data_dict = {'chart_title': "Average VGR Rating vs Operating System Type",
+                 'chart_type': "bar",
+                 'xAxis_title_text': "Average VGR Rating",
+                 'yAxis_title_text': "Operating System Type",
+                 'categories': [],
+                 'values': []}
+    distinct_categories_dict = MachineInfo.objects.values('ostype').distinct()
+    for category in distinct_categories_dict:
+        data_dict['categories'].append(category['ostype'])
+    for system in data_dict['categories']:
+        approx_vgr_dict =  MachineInfo.objects.filter(ostype=system).aggregate(Avg('benchmark__approx_vgr'))
+        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
+    return data_dict
+
+
+def avgVGRvsNCores():
+    data_dict = {'chart_title': "Average VGR Rating vs Number of Cores",
+                 'chart_type': "bar",
+                 'xAxis_title_text': "Average VGR Rating",
+                 'yAxis_title_text': "Number of CPUs",
+                 'categories': [],
+                 'values': []}
+    distinct_number_dict = MachineInfo.objects.values('cores').distinct()
+    for number in distinct_number_dict:
+        data_dict['categories'].append(number['cores'])
+    for number in data_dict['categories']:
+        approx_vgr_dict =  MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__approx_vgr'))
+        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
+    return data_dict
