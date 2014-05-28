@@ -4,7 +4,6 @@ from django.db.models import Sum, Avg
 
 
 def avgVGRvsProcessor():
-    print "In the def, bitch"
     data_dict = {'chart_title': "Average VGR Rating vs Processor Family",
                  'chart_type': "bar",
                  'xAxis_title_text': "Processor Family",
@@ -18,7 +17,6 @@ def avgVGRvsProcessor():
     for processor in data_dict['categories']:
         approx_vgr_dict =  MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__approx_vgr'))
         data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
-        print "poop"
     return data_dict
 
 #if __name__ == "main":
