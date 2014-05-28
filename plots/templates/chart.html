@@ -4,6 +4,8 @@
     <title>{{ title }}</title>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/highcharts.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/themes/dark-unica.js"></script>
+
 </head>
 <body>
 <div id="container" style="width:50%; height:400px"></div>
@@ -35,9 +37,10 @@ $(function () {
     };
 
    $.getJSON('/plots/{{ plotname }}/data/',function(data){
-       console.log(data);
+       console.log(data.values);
+       options.series[0].data = data.values;
        options.xAxis.categories = data.categories;
-       options.series[0] = data.series;
+       Highcharts.setOptions(Highcharts.theme);
        var chart = new Highcharts.Chart(options);
 	    });
    });
