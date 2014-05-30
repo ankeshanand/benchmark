@@ -1,5 +1,5 @@
 __author__ = 'ankesh'
-from .models import BenchmarkLogs, MachineInfo
+from .models import BenchmarkLogs, MachineInfo, RtAverage, RtBldg391, RtM35, RtMoss, RtSphflake, RtStar, RtWorld
 from django.db.models import Sum, Avg
 
 
@@ -123,7 +123,7 @@ def runningTimevsProcessorFamily():
     """
     Returns the aggregated data for Running Time vs processor Family plot in the form of a dictionary.
     """
-    data_dict = {'chart_title': "Running Time vs Processor Family",
+    data_dict = {'chart_title': "Absolute Rays Per Second vs Image Type",
                  'chart_type': "bar",
                  'xAxis_title_text': "Processor Family",
                  'yAxis_title_text': "Running Time",
@@ -138,3 +138,21 @@ def runningTimevsProcessorFamily():
         data_dict['values'].append(running_time_dict['benchmark__running_time__avg'])
     return data_dict
 
+
+def absPerformancevsRefImages():
+    data_dict = {'chart_title': "Running Time vs Processor Family",
+                 'chart_type': "bar",
+                 'xAxis_title_text': "Image",
+                 'yAxis_title_text': "Absolute Rays per Sec",
+                 'categories': ["Moss", "World", "Star", "Bldg391", "M35", "Sphlake"],
+                 'values': []}
+    # Each of the Django ORM statements return a dictionary which is something like:
+    # {'abs_rps__avg': 357609.03125}
+    # We extract the value from this dictionary and append it to data_dict['values']
+    data_dict['values'].append(RtMoss.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    data_dict['values'].append(RtWorld.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    data_dict['values'].append(RtStar.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    data_dict['values'].append(RtBldg391.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    data_dict['values'].append(RtM35.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    data_dict['values'].append(RtSphflake.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    return data_dict
