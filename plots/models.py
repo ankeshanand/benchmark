@@ -22,8 +22,6 @@ class BenchmarkLogs(models.Model):
     results = models.CharField(max_length=765, blank=True)
     compiler_flags = models.TextField(blank=True)
     complete_info = models.TextField(blank=True)
-    def __unicode__(self):
-        return self.machine_desc
     class Meta:
         db_table = u'benchmark_logs'
 
@@ -44,7 +42,7 @@ class EmailVerificationLogs(models.Model):
 
 
 class MachineInfo(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.OneToOneField(BenchmarkLogs, blank=True, primary_key=True)
     osrelease = models.CharField(max_length=300, blank=True)
     cpu_mhz = models.FloatField(null=True, blank=True)
     hostname = models.CharField(max_length=300, blank=True)

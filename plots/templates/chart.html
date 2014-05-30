@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/highcharts.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/exporting.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/themes/dark-unica.js"></script>
+
+</head>
+<body>
+<div id="container" style="width:50%; height:400px"></div>
+</body>
+<script>
+
+$(function () {
+   $(document).ready(function(){
+    var options = {
+        chart: {
+            renderTo: 'container',
+            type: ''
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            title: {
+                text: ''
+            },
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        series: [{}]
+    };
+
+   $.getJSON('/plots/{{ plotname }}/data/',function(data){
+       options.chart.type = data.chart_type;
+       options.series[0].data = data.values;
+       options.xAxis.categories = data.categories;
+       options.title.text = data.chart_title;
+       options.xAxis.title.text = data.xAxis_title_text;
+       options.yAxis.title.text = data.yAxis_title_text;
+       console.log(options);
+       Highcharts.setOptions(Highcharts.theme);
+       var chart = new Highcharts.Chart(options);
+	    });
+   });
+});
+
+</script>
+</html>
