@@ -2,16 +2,17 @@
 <html>
 <head>
     <title>Experimentation with Flot</title>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.axislabels.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.categories.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.tooltip.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.categories.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.tooltip.min.js"></script>
+    <link href="{{ STATIC_URL }}css/style-flot.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Unica+One' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div class="wrapper" style="background-color: #363638;width: 900px;">
-    <h2 style="text-align: center; font-family: 'Unica One'; color: #EFEFF2;">{{ chart_title }}</h2>
+    <h2 id="heading" style="text-align: center; font-family: 'Unica One'; color: #EFEFF2;">{{ plotname }}</h2>
     <div id="chart" style="width:800px; height:300px;"></div>
     </div>
 </body>
@@ -30,7 +31,7 @@
             fill: true,
             fillColor: "#2B908F",
             horizontal: false,
-            barWidth: 0.1,
+            barWidth: 0.2,
             align: "center"
         }
     },
@@ -44,6 +45,7 @@
         axisLabel: "",
         axisLabelUseCanvas: true,
         axisLabelFontFamily: "Unica One",
+        axisLabelFontSizePixels: 18,
         axisLabelColour: "#EFEFF2",
         font:{
             color: "#EFEFF2",
@@ -52,13 +54,15 @@
     },
 
     yaxis:{
+        //mode: "categories",
         font:{
             family: "Unica One",
             color: "#EFEFF2"
         },
         axisLabel: "",
         axisLabelUseCanvas: true,
-        axisLabelFontFamily: "Arial",
+        axisLabelFontFamily: "Unica One",
+        axisLabelFontSizePixels: 18,
         axisLabelColour: "#EFEFF2"
     },
     grid:{
@@ -68,23 +72,32 @@
     },
     tooltip: true,
     tooltipOpts: {
-        content: "",
-        defaultTheme: true
+        content: "%x | %y",
+        defaultTheme: false
     }
 };
 
-    var data = [];
+    var data = [{}];
 
     $(document).ready(function(){
-        $.getJSON("flot-data.json", function(json){
-            data = json.data;
+        $.getJSON("/plots/{{ plotname }}/data/", function(json){
+            data[0].data = json.values;
             console.log(data);
-            options.series.lines.show = json.lines;
-            options.series.points.show = json.points;
-            options.series.bars.show = json.bars;
+            if(json.chart_type == "bar"){
+                options.series.bars.show = true;
+                options.series.bars.barWidth = 0.3;
+            }
+            if(json.chart_type == "line"){
+                options.series.lines.show = true;
+                options.series.points.show = true;
+            }
+            if(json.series_type == "single"){
+                data[0].data = json.values;
+            }
             options.xaxis.axisLabel = json.xaxis_title;
             options.yaxis.axisLabel = json.yaxis_title;
             $.plot($("#chart"), data, options);
+            $("#heading").text(json.chart_title);
         });
         //console.log(data);
     });
