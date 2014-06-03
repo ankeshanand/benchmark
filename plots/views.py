@@ -30,4 +30,4 @@ def draw(request, plotname):
     It also provides the template the name of the plot to draw via the <name_dict> dictionary.
     """
     name_dict = {'plotname': plotname}
-    return render_to_response("chart.html", name_dict, context_instance=RequestContext(request))
+    return render_to_response("flot-chart.html", name_dict, context_instance=RequestContext(request))
