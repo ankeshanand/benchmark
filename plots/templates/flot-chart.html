@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experimentation with Flot</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.flot.js"></script>
+    <script type="text/javascript" src="js/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="js/jquery.flot.categories.js"></script>
+    <script type="text/javascript" src="js/jquery.flot.tooltip.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Unica+One' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="wrapper" style="background-color: #363638;width: 900px;">
+    <h2 style="text-align: center; font-family: 'Unica One'; color: #EFEFF2;">{{ chart_title }}</h2>
+    <div id="chart" style="width:800px; height:300px;"></div>
+    </div>
+</body>
+<script>
+    var options = {
+    series: {
+        color: "#FFFFFF",
+        lines:{
+            show: false,
+            color: "#2B908F"
+        },
+        points:{
+            show: false
+        },
+         bars: { show: true,
+            fill: true,
+            fillColor: "#2B908F",
+            horizontal: false,
+            barWidth: 0.1,
+            align: "center"
+        }
+    },
+
+    axisLabels: {
+            show: true
+        },
+
+    xaxis:{
+        mode: "categories",
+        axisLabel: "",
+        axisLabelUseCanvas: true,
+        axisLabelFontFamily: "Unica One",
+        axisLabelColour: "#EFEFF2",
+        font:{
+            color: "#EFEFF2",
+            family: "Unica One"
+        }
+    },
+
+    yaxis:{
+        font:{
+            family: "Unica One",
+            color: "#EFEFF2"
+        },
+        axisLabel: "",
+        axisLabelUseCanvas: true,
+        axisLabelFontFamily: "Arial",
+        axisLabelColour: "#EFEFF2"
+    },
+    grid:{
+        backgroundColor: "#353536",
+        color: "#B6B6B9",
+        hoverable: true
+    },
+    tooltip: true,
+    tooltipOpts: {
+        content: "",
+        defaultTheme: true
+    }
+};
+
+    var data = [];
+
+    $(document).ready(function(){
+        $.getJSON("flot-data.json", function(json){
+            data = json.data;
+            console.log(data);
+            options.series.lines.show = json.lines;
+            options.series.points.show = json.points;
+            options.series.bars.show = json.bars;
+            options.xaxis.axisLabel = json.xaxis_title;
+            options.yaxis.axisLabel = json.yaxis_title;
+            $.plot($("#chart"), data, options);
+        });
+        //console.log(data);
+    });
+</script>
+</html>
