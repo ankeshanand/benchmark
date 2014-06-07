@@ -67,6 +67,28 @@ def avgVGRvsNCores():
     return data_dict
 
 
+def avgVGRvsNProcessors():
+    """
+    Returns the aggregated data for Average VGR vs Number of Processors plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Average VGR Rating vs Number of Processors",
+                 'chart_type': "bar",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "Number of Processors",
+                 'categories': [],
+                 'series-type': "single",
+                 'values': []}
+    distinct_number_dict = MachineInfo.objects.values('processors').distinct()
+    for number in distinct_number_dict:
+        data_dict['categories'].append(number['processors'])
+    for number in data_dict['categories']:
+        approx_vgr_dict = MachineInfo.objects.filter(processors=number).aggregate(Avg('benchmark__approx_vgr'))
+        value_pair = [number, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+
 def logVGRvsProcessorFamily():
     """
     Returns the aggregated data for Logarithmic VGR vs Processor Family plot in the form of a dictionary.
@@ -135,20 +157,19 @@ def runningTimevsProcessorFamily():
     """
     Returns the aggregated data for Running Time vs processor Family plot in the form of a dictionary.
     """
-    data_dict = {'chart_title': "Absolute Rays Per Second vs Image Type",
+    data_dict = {'chart_title': "Running Time against Processor Family",
                  'chart_type': "bar",
                  'xaxis_title': "Processor Family",
                  'yaxis_title': "Running Time",
                  'categories': [],
                  'series-type': "single",
                  'values': []}
-
     distinct_categories_dict = MachineInfo.objects.values('vendor_id').distinct()
     for category in distinct_categories_dict:
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
-        running_time_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__running_time_vgr'))
-        value_pair = [processor, running_time_dict['benchmark__approx_vgr__avg']]
+        running_time_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__running_time'))
+        value_pair = [processor, running_time_dict['benchmark__running_time__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
 
