@@ -96,6 +96,11 @@
                 options.series.lines.show = true;
                 options.series.points.show = true;
             }
+            if(json.chart_type == "area"){
+                options.series.lines.show = true;
+                options.series.points.show = true;
+                options.series.lines.fill = true;
+            }
             if(json.series_type == "single"){
                 data[0].data = json.values;
             }
