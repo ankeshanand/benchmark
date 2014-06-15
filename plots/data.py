@@ -106,7 +106,7 @@ def logVGRvsProcessorFamily():
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
         log_vgr_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__log_vgr'))
-        value_pair = [processor, log_vgr_dict['benchmark__approx_vgr__avg']]
+        value_pair = [processor, log_vgr_dict['benchmark__log_vgr__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
 
@@ -127,7 +127,7 @@ def logVGRvsOSType():
         data_dict['categories'].append(category['ostype'])
     for os in data_dict['categories']:
         log_vgr_dict = MachineInfo.objects.filter(ostype=os).aggregate(Avg('benchmark__log_vgr'))
-        value_pair = [os, log_vgr_dict['benchmark__approx_vgr__avg']]
+        value_pair = [os, log_vgr_dict['benchmark__log_vgr__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
 
@@ -137,7 +137,7 @@ def logVGRvsNCores():
     Returns the aggregated data for Logarithmic VGR vs Number of CPUs plot in the form of a dictionary.
     """
     data_dict = {'chart_title': "Logarithmic VGR Rating vs Number of Cores",
-                 'chart_type': "bar",
+                 'chart_type': "line",
                  'yaxis_title': "Logarithmic VGR Rating",
                  'xaxis_title': "Number of CPUs",
                  'categories': [],
@@ -148,7 +148,7 @@ def logVGRvsNCores():
         data_dict['categories'].append(number['cores'])
     for number in data_dict['categories']:
         log_vgr_dict = MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__log_vgr'))
-        value_pair = [number, log_vgr_dict['benchmark__approx_vgr__avg']]
+        value_pair = [number, log_vgr_dict['benchmark__log_vgr__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
 
@@ -170,6 +170,27 @@ def runningTimevsProcessorFamily():
     for processor in data_dict['categories']:
         running_time_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__running_time'))
         value_pair = [processor, running_time_dict['benchmark__running_time__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+def runningTimevsNCores():
+    """
+    Returns the aggregated data for Running Time vs Number of Cores plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Running Time vs Number of Cores",
+                 'chart_type': "line",
+                 'xaxis_title': "Number of Cores",
+                 'yaxis_title': "Running Time",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_categories_dict = MachineInfo.objects.values('cores').distinct()
+    for category in distinct_categories_dict:
+        data_dict['categories'].append(category['cores'])
+    for number in data_dict['categories']:
+        running_time_dict = MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__running_time'))
+        value_pair = [number, running_time_dict['benchmark__running_time__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
 
