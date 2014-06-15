@@ -28,7 +28,7 @@
         points:{
             show: false
         },
-         bars: { show: true,
+         bars: { show: false,
             fill: true,
             fillColor: "#2B908F",
             horizontal: false,
@@ -57,7 +57,7 @@
     },
 
     yaxis:{
-        //mode: "categories",
+        mode: "",
         font:{
             family: "'Lato', sans-serif",
             color: "#EFEFF2"
@@ -86,8 +86,6 @@
 
     $(document).ready(function(){
         $.getJSON("/plots/{{ plotname }}/data/", function(json){
-            data[0].data = json.values;
-            console.log(data);
             if(json.chart_type == "bar"){
                 options.series.bars.show = true;
                 options.series.bars.barWidth = 0.3;
@@ -96,7 +94,6 @@
                 options.series.lines.show = true;
                 options.series.points.show = true;
                 options.series.color = "#2B908F";
-                options.xaxis.mode = "";
             }
             if(json.chart_type == "area"){
                 options.series.lines.show = true;
@@ -105,6 +102,16 @@
             }
             if(json.series_type == "single"){
                 data[0].data = json.values;
+            }
+            if(json.series_type == "multi"){
+                data[0].data = json.values[0];
+                data[0].label = json.labels[0];
+                console.log("Values Length="+json.values.length);
+                for(i=1; i<json.values.length; i++){
+                    next_series = {data: json.values[i], label: json.labels[i]};
+                    json.values.push(next_series);
+                }
+                options.xaxis.mode = "categories";
             }
             options.xaxis.axisLabel = json.xaxis_title;
             options.yaxis.axisLabel = json.yaxis_title;

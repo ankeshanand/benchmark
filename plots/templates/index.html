@@ -8,6 +8,7 @@
     <link href="{{ STATIC_URL }}css/plots-index-style.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background-color: #f6f6f6;">
+    <!-- Start navbar-->
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -33,10 +34,12 @@
         </div>
       </div>
     </div> <!-- end navbar -->
+
 <div class="container" style="margin-top: 80px;">
     <div class="row">
         <div class="col-sm-3 col-md-3">
             <div class="panel-group" id="accordion">
+                <!-- Start Average VGR Comparisons Panel -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -71,6 +74,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Average VGR Comparisons -->
+
+                <!-- Start Efficiency panel -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -89,13 +95,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Efficiency Panel -->
+
+                <!-- Start Running Time Comparisons Panel -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Running Time Comparisons</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Running Time Comparisons</a>
                         </h4>
                     </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
+                    <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -107,13 +116,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Running Time Comparisons Panel -->
+
+                <!-- Start Image Performance Panel -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Image Performance</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Image Performance</a>
                         </h4>
                     </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
+                    <div id="collapseFour" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table table-striped">
                                 <tr>
@@ -123,20 +135,23 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="#" onclick="changeToPlot('')"> Performance of Processor Families against Reference Images</a>
+                                        <a href="#" onclick="changeToPlot('processorFamiliesvsRefImages')"> Performance of Processor Families against Reference Images</a>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
+                <!-- End Image Performance Panel -->
+
+                <!-- Start Distribution Panel -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Distribution</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Distribution</a>
                         </h4>
                     </div>
-                    <div id="collapseFour" class="panel-collapse collapse">
+                    <div id="collapseFive" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -148,13 +163,13 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Distribution Panel -->
             </div>
         </div>
         <div class="col-sm-9 col-md-9">
             <div id="content" class="well">
                 <h1>
                     Benchmark Analytics</h1>
-
             </div>
         </div>
     </div>
