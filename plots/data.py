@@ -195,7 +195,7 @@ def processorFamiliesvsRefImages():
     Returns the aggregated data for the performance of Processor Families against Reference Images plot
     in the form of a dictionary.
     """
-    data_dict = {'chart_title': "Absolute Rays Per Sec against Reference Images",
+    data_dict = {'chart_title': "Performance of Processor Families against Reference Images",
                  'chart_type': "line",
                  'xaxis_title': "Image",
                  'yaxis_title': "Absolute Rays per Sec",
