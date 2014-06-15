@@ -51,7 +51,7 @@ def avgVGRvsNCores():
     Returns the aggregated data for Average VGR vs Number of CPUs plot in the form of a dictionary.
     """
     data_dict = {'chart_title': "Average VGR Rating vs Number of Cores",
-                 'chart_type': "bar",
+                 'chart_type': "line",
                  'yaxis_title': "Average VGR Rating",
                  'xaxis_title': "Number of CPUs",
                  'categories': [],
@@ -72,7 +72,7 @@ def avgVGRvsNProcessors():
     Returns the aggregated data for Average VGR vs Number of Processors plot in the form of a dictionary.
     """
     data_dict = {'chart_title': "Average VGR Rating vs Number of Processors",
-                 'chart_type': "bar",
+                 'chart_type': "line",
                  'yaxis_title': "Average VGR Rating",
                  'xaxis_title': "Number of Processors",
                  'categories': [],
@@ -186,5 +186,26 @@ def absPerformancevsRefImages():
         model_name = "Rt"+category
         model_class = get_model('plots', model_name)
         value_pair = [category, model_class.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+def avgVGRvsCPUmhz():
+    """
+    Returns the aggregated data for Average VGR vs CPU MHz plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Efficiency: Average VGR Rating vs CPU MHz",
+                 'chart_type': "line",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "CPU MHz",
+                 'categories': [],
+                 'series-type': "single",
+                 'values': []}
+    distinct_number_dict = MachineInfo.objects.values('cpu_mhz').distinct()
+    for number in distinct_number_dict:
+        data_dict['categories'].append(number['cpu_mhz'])
+    for number in data_dict['categories']:
+        approx_vgr_dict = MachineInfo.objects.filter(cpu_mhz=number).aggregate(Avg('benchmark__approx_vgr'))
+        value_pair = [number, approx_vgr_dict['benchmark__approx_vgr__avg']]
         data_dict['values'].append(value_pair)
     return data_dict
