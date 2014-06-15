@@ -174,6 +174,27 @@ def runningTimevsProcessorFamily():
     return data_dict
 
 
+def runningTimevsOSType():
+    """
+    Returns the aggregated data for Running Time vs Operating System Type plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Running Time against Operating System Type",
+                 'chart_type': "bar",
+                 'xaxis_title': "Operating System Type",
+                 'yaxis_title': "Running Time (in sec)",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_categories_dict = MachineInfo.objects.values('ostype').distinct()
+    for category in distinct_categories_dict:
+        data_dict['categories'].append(category['ostype'])
+    for os in data_dict['categories']:
+        running_time_dict = MachineInfo.objects.filter(ostype=os).aggregate(Avg('benchmark__running_time'))
+        value_pair = [os, running_time_dict['benchmark__running_time__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
 def runningTimevsNCores():
     """
     Returns the aggregated data for Running Time vs Number of Cores plot in the form of a dictionary.
