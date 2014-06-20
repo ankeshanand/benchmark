@@ -4,7 +4,7 @@
     <title>Benchmark Visualizations</title>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
-    <link href="{{ STATIC_URL }}css/bootstrap-plots.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/bootstrap-yeti.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/plots-index-style.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background-color: #f6f6f6;">
@@ -12,7 +12,15 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand">BRL-CAD Benchmarks</a>
+         <a class="navbar-brand" rel="home" href="#" title="BRL-CAD Benchmarks">
+            <img style="height:40px; margin-top: -10px;"
+             src="http://cpp-tricks.com/brlcad/images/logo_70.png">BRL-CAD Benchmarks
+         </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
