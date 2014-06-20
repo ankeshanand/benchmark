@@ -1,6 +1,6 @@
 __author__ = 'ankesh'
 from .models import BenchmarkLogs, MachineInfo, RtAverage, RtBldg391, RtM35, RtMoss, RtSphflake, RtStar, RtWorld
-from django.db.models import Sum, Avg
+from django.db.models import Sum, Avg, get_model
 
 
 def avgVGRvsProcessorFamily():
@@ -9,9 +9,10 @@ def avgVGRvsProcessorFamily():
     """
     data_dict = {'chart_title': "Average VGR Rating vs Processor Family",
                  'chart_type': "bar",
-                 'xAxis_title_text': "Processor Family",
-                 'yAxis_title_text': "Average VGR Rating",
+                 'xaxis_title': "Processor Family",
+                 'yaxis_title': "Average VGR Rating",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
 
     distinct_categories_dict = MachineInfo.objects.values('vendor_id').distinct()
@@ -19,7 +20,8 @@ def avgVGRvsProcessorFamily():
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
         approx_vgr_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__approx_vgr'))
-        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
+        value_pair = [processor, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
@@ -29,16 +31,18 @@ def avgVGRvsOSType():
     """
     data_dict = {'chart_title': "Average VGR Rating vs Operating System Type",
                  'chart_type': "bar",
-                 'yAxis_title_text': "Average VGR Rating",
-                 'xAxis_title_text': "Operating System Type",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "Operating System Type",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
     distinct_categories_dict = MachineInfo.objects.values('ostype').distinct()
     for category in distinct_categories_dict:
         data_dict['categories'].append(category['ostype'])
-    for system in data_dict['categories']:
-        approx_vgr_dict = MachineInfo.objects.filter(ostype=system).aggregate(Avg('benchmark__approx_vgr'))
-        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
+    for os in data_dict['categories']:
+        approx_vgr_dict = MachineInfo.objects.filter(ostype=os).aggregate(Avg('benchmark__approx_vgr'))
+        value_pair = [os, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
@@ -47,18 +51,42 @@ def avgVGRvsNCores():
     Returns the aggregated data for Average VGR vs Number of CPUs plot in the form of a dictionary.
     """
     data_dict = {'chart_title': "Average VGR Rating vs Number of Cores",
-                 'chart_type': "bar",
-                 'yAxis_title_text': "Average VGR Rating",
-                 'xAxis_title_text': "Number of CPUs",
+                 'chart_type': "line",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "Number of CPUs",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
     distinct_number_dict = MachineInfo.objects.values('cores').distinct()
     for number in distinct_number_dict:
         data_dict['categories'].append(number['cores'])
     for number in data_dict['categories']:
         approx_vgr_dict = MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__approx_vgr'))
-        data_dict['values'].append(approx_vgr_dict['benchmark__approx_vgr__avg'])
+        value_pair = [number, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
+
+
+def avgVGRvsNProcessors():
+    """
+    Returns the aggregated data for Average VGR vs Number of Processors plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Average VGR Rating vs Number of Processors",
+                 'chart_type': "line",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "Number of Processors",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_number_dict = MachineInfo.objects.values('processors').distinct()
+    for number in distinct_number_dict:
+        data_dict['categories'].append(number['processors'])
+    for number in data_dict['categories']:
+        approx_vgr_dict = MachineInfo.objects.filter(processors=number).aggregate(Avg('benchmark__approx_vgr'))
+        value_pair = [number, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
 
 
 def logVGRvsProcessorFamily():
@@ -67,9 +95,10 @@ def logVGRvsProcessorFamily():
     """
     data_dict = {'chart_title': "Logarithmic VGR Rating vs Processor Family",
                  'chart_type': "bar",
-                 'xAxis_title_text': "Processor Family",
-                 'yAxis_title_text': "Logarithmic VGR Rating",
+                 'xaxis_title': "Processor Family",
+                 'yaxis_title': "Logarithmic VGR Rating",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
 
     distinct_categories_dict = MachineInfo.objects.values('vendor_id').distinct()
@@ -77,7 +106,8 @@ def logVGRvsProcessorFamily():
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
         log_vgr_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__log_vgr'))
-        data_dict['values'].append(log_vgr_dict['benchmark__log_vgr__avg'])
+        value_pair = [processor, log_vgr_dict['benchmark__log_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
@@ -87,16 +117,18 @@ def logVGRvsOSType():
     """
     data_dict = {'chart_title': "Average VGR Rating vs Operating System Type",
                  'chart_type': "bar",
-                 'yAxis_title_text': "Average VGR Rating",
-                 'xAxis_title_text': "Operating System Type",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "Operating System Type",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
     distinct_categories_dict = MachineInfo.objects.values('ostype').distinct()
     for category in distinct_categories_dict:
         data_dict['categories'].append(category['ostype'])
-    for system in data_dict['categories']:
-        log_vgr_dict = MachineInfo.objects.filter(ostype=system).aggregate(Avg('benchmark__log_vgr'))
-        data_dict['values'].append(log_vgr_dict['benchmark__log_vgr__avg'])
+    for os in data_dict['categories']:
+        log_vgr_dict = MachineInfo.objects.filter(ostype=os).aggregate(Avg('benchmark__log_vgr'))
+        value_pair = [os, log_vgr_dict['benchmark__log_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
@@ -105,17 +137,19 @@ def logVGRvsNCores():
     Returns the aggregated data for Logarithmic VGR vs Number of CPUs plot in the form of a dictionary.
     """
     data_dict = {'chart_title': "Logarithmic VGR Rating vs Number of Cores",
-                 'chart_type': "bar",
-                 'yAxis_title_text': "Logarithmic VGR Rating",
-                 'xAxis_title_text': "Number of CPUs",
+                 'chart_type': "line",
+                 'yaxis_title': "Logarithmic VGR Rating",
+                 'xaxis_title': "Number of CPUs",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
     distinct_number_dict = MachineInfo.objects.values('cores').distinct()
     for number in distinct_number_dict:
         data_dict['categories'].append(number['cores'])
     for number in data_dict['categories']:
         log_vgr_dict = MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__log_vgr'))
-        data_dict['values'].append(log_vgr_dict['benchmark__log_vgr__avg'])
+        value_pair = [number, log_vgr_dict['benchmark__log_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
@@ -123,36 +157,125 @@ def runningTimevsProcessorFamily():
     """
     Returns the aggregated data for Running Time vs processor Family plot in the form of a dictionary.
     """
-    data_dict = {'chart_title': "Absolute Rays Per Second vs Image Type",
+    data_dict = {'chart_title': "Running Time against Processor Family",
                  'chart_type': "bar",
-                 'xAxis_title_text': "Processor Family",
-                 'yAxis_title_text': "Running Time",
+                 'xaxis_title': "Processor Family",
+                 'yaxis_title': "Running Time",
                  'categories': [],
+                 'series_type': "single",
                  'values': []}
-
     distinct_categories_dict = MachineInfo.objects.values('vendor_id').distinct()
     for category in distinct_categories_dict:
         data_dict['categories'].append(category['vendor_id'])
     for processor in data_dict['categories']:
-        running_time_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__running_time_vgr'))
-        data_dict['values'].append(running_time_dict['benchmark__running_time__avg'])
+        running_time_dict = MachineInfo.objects.filter(vendor_id=processor).aggregate(Avg('benchmark__running_time'))
+        value_pair = [processor, running_time_dict['benchmark__running_time__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+def runningTimevsOSType():
+    """
+    Returns the aggregated data for Running Time vs Operating System Type plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Running Time against Operating System Type",
+                 'chart_type': "bar",
+                 'xaxis_title': "Operating System Type",
+                 'yaxis_title': "Running Time (in sec)",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_categories_dict = MachineInfo.objects.values('ostype').distinct()
+    for category in distinct_categories_dict:
+        data_dict['categories'].append(category['ostype'])
+    for os in data_dict['categories']:
+        running_time_dict = MachineInfo.objects.filter(ostype=os).aggregate(Avg('benchmark__running_time'))
+        value_pair = [os, running_time_dict['benchmark__running_time__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+def runningTimevsNCores():
+    """
+    Returns the aggregated data for Running Time vs Number of Cores plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Running Time vs Number of Cores",
+                 'chart_type': "line",
+                 'xaxis_title': "Number of Cores",
+                 'yaxis_title': "Running Time",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_categories_dict = MachineInfo.objects.values('cores').distinct()
+    for category in distinct_categories_dict:
+        data_dict['categories'].append(category['cores'])
+    for number in data_dict['categories']:
+        running_time_dict = MachineInfo.objects.filter(cores=number).aggregate(Avg('benchmark__running_time'))
+        value_pair = [number, running_time_dict['benchmark__running_time__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict
 
 
 def absPerformancevsRefImages():
-    data_dict = {'chart_title': "Running Time vs Processor Family",
+    data_dict = {'chart_title': "Absolute Rays Per Sec against Reference Images",
                  'chart_type': "bar",
-                 'xAxis_title_text': "Image",
-                 'yAxis_title_text': "Absolute Rays per Sec",
-                 'categories': ["Moss", "World", "Star", "Bldg391", "M35", "Sphlake"],
+                 'xaxis_title': "Image",
+                 'yaxis_title': "Absolute Rays per Sec",
+                 'series_type': "single",
+                 'categories': ["Moss", "World", "Star", "Bldg391", "M35", "Sphflake"],
                  'values': []}
-    # Each of the Django ORM statements return a dictionary which is something like:
-    # {'abs_rps__avg': 357609.03125}
-    # We extract the value from this dictionary and append it to data_dict['values']
-    data_dict['values'].append(RtMoss.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
-    data_dict['values'].append(RtWorld.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
-    data_dict['values'].append(RtStar.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
-    data_dict['values'].append(RtBldg391.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
-    data_dict['values'].append(RtM35.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
-    data_dict['values'].append(RtSphflake.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg'])
+    for category in data_dict['categories']:
+        model_name = "Rt"+category
+        model_class = get_model('plots', model_name)
+        value_pair = [category, model_class.objects.all().aggregate(Avg('abs_rps'))['abs_rps__avg']]
+        data_dict['values'].append(value_pair)
+    return data_dict
+
+
+def processorFamiliesvsRefImages():
+    """
+    Returns the aggregated data for the performance of Processor Families against Reference Images plot
+    in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Performance of Processor Families against Reference Images",
+                 'chart_type': "line",
+                 'xaxis_title': "Image",
+                 'yaxis_title': "Absolute Rays per Sec",
+                 'series_type': "multi",
+                 'categories': ["Moss", "World", "Star", "Bldg391", "M35", "Sphflake"],
+                 'labels': [],
+                 'values': []}
+    processor_dict = MachineInfo.objects.values('vendor_id').distinct()
+    series_data = []
+    for processor in processor_dict:
+        for category in data_dict['categories']:
+            model_name = 'Rt'+category
+            field = model_name.lower()
+            value_pair = [category,
+                          BenchmarkLogs.objects.filter(machineinfo__vendor_id=processor['vendor_id'])
+                              .aggregate(Avg(field+'__abs_rps'))[field+'__abs_rps__avg']]
+            series_data.append(value_pair)
+        data_dict['labels'].append(processor['vendor_id'])
+        data_dict['values'].append(series_data)
+    return data_dict
+
+
+def avgVGRvsCPUmhz():
+    """
+    Returns the aggregated data for Average VGR vs CPU MHz plot in the form of a dictionary.
+    """
+    data_dict = {'chart_title': "Efficiency: Average VGR Rating vs CPU MHz",
+                 'chart_type': "line",
+                 'yaxis_title': "Average VGR Rating",
+                 'xaxis_title': "CPU MHz",
+                 'categories': [],
+                 'series_type': "single",
+                 'values': []}
+    distinct_number_dict = MachineInfo.objects.values('cpu_mhz').distinct()
+    for number in distinct_number_dict:
+        data_dict['categories'].append(number['cpu_mhz'])
+    for number in data_dict['categories']:
+        approx_vgr_dict = MachineInfo.objects.filter(cpu_mhz=number).aggregate(Avg('benchmark__approx_vgr'))
+        value_pair = [number, approx_vgr_dict['benchmark__approx_vgr__avg']]
+        data_dict['values'].append(value_pair)
     return data_dict

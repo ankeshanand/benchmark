@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experimentation with Flot</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.categories.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.tooltip.min.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap-yeti.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/style-flot.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Unica+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+<body style="margin-top: -40px;">
+<div class="wrapper" style="background-color: #333333;width: 800px;">
+    <h3 id="heading" style="text-align: center;  color: #EFEFF2;">{{ plotname }}</h3>
+    <div id="chart" style="width:800px; height:300px;"></div>
+    </div>
+</body>
+<script>
+    var options = {
+    series: {
+        color: "#FFFFFF",
+        lines:{
+            show: false,
+            color: "#b32c44"
+        },
+        points:{
+            show: false
+        },
+         bars: { show: false,
+            fill: true,
+            fillColor: "#B32C44",
+            horizontal: false,
+            barWidth: 0.2,
+            align: "center"
+        }
+    },
+
+    axisLabels: {
+            show: true
+        },
+
+    xaxis:{
+        mode: "categories",
+        axisLabel: "",
+        axisLabelUseCanvas: true,
+        axisLabelFontFamily: "'Lato', sans-serif",
+        axisLabelFontSizePixels: 18,
+        axisLabelColour: "#EFEFF2",
+        font:{
+            color: "#EFEFF2",
+            family: "'Lato', sans-serif"
+        },
+        axisLabelPadding: 10,
+        autoscaleMargin: 0.1
+    },
+
+    yaxis:{
+        mode: "",
+        font:{
+            family: "'Lato', sans-serif",
+            color: "#EFEFF2"
+        },
+        axisLabel: "",
+        axisLabelUseCanvas: true,
+        axisLabelFontFamily: "'Lato', sans-serif",
+        axisLabelFontSizePixels: 18,
+        axisLabelColour: "#EFEFF2",
+        axisLabelPadding: 5
+    },
+    grid:{
+        backgroundColor: "#333333",
+        color: "#B6B6B9",
+        hoverable: true,
+        margin: 10
+    },
+    tooltip: true,
+    tooltipOpts: {
+        content: "%x | %y",
+        defaultTheme: false
+    }
+};
+
+    var data = [{}];
+
+    $(document).ready(function(){
+        $.getJSON("/plots/{{ plotname }}/data/", function(json){
+            if(json.chart_type == "bar"){
+                options.series.bars.show = true;
+                options.series.bars.barWidth = 0.3;
+            }
+            if(json.chart_type == "line"){
+                options.series.lines.show = true;
+                options.series.points.show = true;
+                options.series.color = "#b32c44";
+            }
+            if(json.chart_type == "area"){
+                options.series.lines.show = true;
+                options.series.points.show = true;
+                options.series.lines.fill = true;
+            }
+            if(json.series_type == "single"){
+                data[0].data = json.values;
+            }
+            if(json.series_type == "multi"){
+                data[0].data = json.values[0];
+                data[0].label = json.labels[0];
+                console.log("Values Length="+json.values.length);
+                for(i=1; i<json.values.length; i++){
+                    next_series = {data: json.values[i], label: json.labels[i]};
+                    json.values.push(next_series);
+                }
+                options.xaxis.mode = "categories";
+            }
+            options.xaxis.axisLabel = json.xaxis_title;
+            options.yaxis.axisLabel = json.yaxis_title;
+            $.plot($("#chart"), data, options);
+            $("#heading").text(json.chart_title);
+        });
+        //console.log(data);
+    });
+</script>
+</html>
