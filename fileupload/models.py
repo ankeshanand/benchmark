@@ -1,6 +1,13 @@
 # encoding: utf-8
 from django.db import models
+import uuid
+import os
 
+
+def unique_file_name(instance, filename):
+    path = 'benchmarkLogs/'
+    name = str(uuid.uuid4()) + '.log'
+    return os.path.join(path, name)
 
 class Picture(models.Model):
     """This is a small demo using just two fields. The slug field is really not
@@ -9,7 +16,7 @@ class Picture(models.Model):
     problems installing pillow, use a more generic FileField instead.
 
     """
-    file = models.FileField(upload_to="pictures")
+    file = models.FileField(upload_to=unique_file_name)
     slug = models.SlugField(max_length=50, blank=True)
 
     def __unicode__(self):
