@@ -58,7 +58,7 @@ class MachineInfo(models.Model):
 
 
 class Md5Log(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, blank=True, primary_key=True)
     file_name = models.CharField(max_length=765, blank=True)
     md5sum = models.CharField(max_length=300, blank=True)
     archived = models.CharField(max_length=9, blank=True)
@@ -68,7 +68,7 @@ class Md5Log(models.Model):
 
 
 class RtAverage(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, blank=True, primary_key=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -77,7 +77,7 @@ class RtAverage(models.Model):
 
 
 class RtBldg391(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -86,7 +86,7 @@ class RtBldg391(models.Model):
 
 
 class RtM35(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -95,7 +95,7 @@ class RtM35(models.Model):
 
 
 class RtMoss(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -104,7 +104,7 @@ class RtMoss(models.Model):
 
 
 class RtSphflake(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -113,7 +113,7 @@ class RtSphflake(models.Model):
 
 
 class RtStar(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
@@ -122,7 +122,7 @@ class RtStar(models.Model):
 
 
 class RtWorld(models.Model):
-    benchmark = models.ForeignKey(BenchmarkLogs, null=True, blank=True)
+    benchmark = models.ForeignKey(BenchmarkLogs, primary_key=True, blank=True)
     abs_rps = models.FloatField(null=True, blank=True)
     vgr_rps = models.FloatField(null=True, blank=True)
     result = models.CharField(max_length=57, blank=True)
