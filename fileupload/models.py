@@ -6,7 +6,7 @@ import os
 
 def unique_file_name(instance, filename):
     path = 'benchmarkLogs/'
-    name = str(uuid.uuid4()) + '.log'
+    name = str(uuid.uuid4().hex) + '.log'
     return os.path.join(path, name)
 
 class Picture(models.Model):
