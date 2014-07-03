@@ -60,10 +60,10 @@ def get_connection():
 #        os.chdir('libs/')
 #        config.read(['../config'])
 #        os.chdir('../')
-#    os.chdir('libs/')
+    os.chdir('libs/')
     config.read(['../config'])
-    os.chdir('../')    
-        
+    os.chdir('../')
+
     connection = _mysql.connect(host=config.get("database", "host"), 
                                  user=config.get("database", "username"), 
                                  passwd=config.get("database", "password"), 
@@ -80,7 +80,7 @@ def db_insert(conn, query):
     @param query: Query string to be executed
     """
     logger = bp_logger('dbutils')
-    
+
     try :
         conn.query(query)
     except _mysql_exceptions.ProgrammingError as (errno, strerror) :
