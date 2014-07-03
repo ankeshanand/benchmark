@@ -2,7 +2,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from libs.parser import Parser
-import os, settings
+import os
+import settings
+import time
 from plots.models import Md5Log, BenchmarkLogs, MachineInfo, RtAverage, RtMoss, RtBldg391, RtM35, RtSphflake, RtWorld, RtStar
 
 def show_result(request, filename):
@@ -13,7 +15,7 @@ def show_result(request, filename):
         file = settings.MEDIA_ROOT + filename + '.log'
         parser_obj = Parser(file)
         parser_obj.run()
-
+    time.sleep(3)
     data_dict = {
     }
     #Query the database for Benchmark data from benchmark_logs table
