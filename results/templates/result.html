@@ -6,8 +6,13 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.categories.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.tooltip.min.js"></script>
     <link href="{{ STATIC_URL }}css/bootstrap-yeti.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/style-result-custom.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- Start navbar-->
@@ -15,8 +20,8 @@
       <div class="container">
         <div class="navbar-header">
          <a class="navbar-brand" rel="home" href="#" title="BRL-CAD Benchmarks">
-            <img style="height:40px; margin-top: -10px;"
-             src="http://cpp-tricks.com/brlcad/images/logo_70.png">BRL-CAD Benchmarks
+            <!--img style="height:40px; margin-top: -10px;"
+             src="http://cpp-tricks.com/brlcad/images/logo_70.png"-->BRL-CAD Benchmarks
          </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
@@ -50,6 +55,13 @@
             <div class="row">
               <div class="col-md-6">
                 <h1>Benchmark Result</h1>
+              </div>
+              <div class="col-md-6" style="text-align: right;">
+                  <h1> Share:
+                      <a><i class="fa fa-facebook">     </i></a>
+                      <a><i class="fa fa-twitter"></i></a>
+                      <a><i class="fa fa-google-plus"></i></a>
+                  </h1>
               </div>
             </div>
           </div>
@@ -106,10 +118,10 @@
                  <div class="col-md-6">
                     <div class="panel panel-primary big-unit">
                       <div class="panel-heading">
-                        <h2 class="panel-title" style="font-weight:bold; text-align: center;">System Information</h2>
+                        <h2 class="panel-title" style="font-weight:bold; text-align: center;">SYSTEM INFORMATION</h2>
                       </div>
                       <div class="panel-body" style="text-align: center;">
-                        <table class="table">
+                        <table class="table borderless">
                             <tbody>
                                 <tr>
                                     <td> Operating System Type:</td>
@@ -140,6 +152,25 @@
                       </div>
                     </div>
                  </div>
+                 <div class="col-md-6">
+                     <div class="panel panel-primary big-unit">
+                        <div class="panel-heading">
+                            <h2 class="panel-title" style="font-weight:bold; text-align: center;">IMAGE PERFORMANCE</h2>
+                        </div>
+                        <div class="panel-body" id="chart" style="height: 250px;">
+                        </div>
+                      </div>
+                 </div>
              </div>
+        </div>
 </body>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart.js"></script>
+<script>
+    data[0].data = [["Bldg391", {{ Rt_Bldg391 }}], ["M35", {{ Rt_M35 }}], ["Moss", {{ Rt_Moss }}],
+         ["Sphlake", {{ Rt_Sphlake }}], ["Star", {{ Rt_Star }}], ["World", {{ Rt_World }}]];
+    $(document).ready(function(){
+        $.plot($("#chart"), data, options);
+        console.log(data);
+    });
+</script>
 </html>

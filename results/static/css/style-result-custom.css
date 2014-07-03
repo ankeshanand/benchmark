@@ -53,3 +53,31 @@
     -webkit-box-shadow: 3px 3px 2px 0px #151515;
     box-shadow:         3px 3px 2px 0px #151515;
 }
+
+.borderless td tr {
+    border-top: none;
+}
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #b32c44;
+  border-color: #a0233a;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: #a0233a;
+  border-color: #a0233a;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.table > tbody > tr > td{
+    border-top: none;
+}
