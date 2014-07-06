@@ -68,7 +68,7 @@ def get_connection():
                                  user=config.get("database", "username"), 
                                  passwd=config.get("database", "password"), 
                                  db=config.get("database", "database"))
-    
+
     return connection
 
 
@@ -131,6 +131,9 @@ def check_if_file_exists_in_db(conn, md5sum):
             """.format(md5sum)
     
     return int(db_select(conn, query)[0][0])
+
+def close_connection(conn):
+    _mysql.connection.close(conn)
 
 # Local Variables:
 # mode: python

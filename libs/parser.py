@@ -78,7 +78,7 @@ class Parser:
             self.write_to_db()
             # self.archive_file()
             self.logger.info("Success: Done writing {:s} to db.".format(self.filename.split('/')[-1]))
-    
+            dbutils.close_connection(self.connection)
     
     def check_if_file_exists_in_db(self):
         """
