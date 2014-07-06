@@ -188,6 +188,10 @@ $(function () {
                 .prop('href', file.url);
             $(data.context.children()[index])
                 .wrap(link);
+            window.location.href = window.location.protocol + "//" + window.location.host + "/"
++'result/'+file.url.split('/').pop().slice(0,-4);
+            console.log(file.name);
+            console.log(file.url.split('/').pop().slice(0,-4));
         });
     }).on('fileuploadfail', function (e, data) {
         $.each(data.result.files, function (index, file) {

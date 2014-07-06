@@ -6,16 +6,40 @@ import os
 import settings
 import time
 from plots.models import Md5Log, BenchmarkLogs, MachineInfo, RtAverage, RtMoss, RtBldg391, RtM35, RtSphflake, RtWorld, RtStar
+from django.db import transaction
+
+@transaction.commit_manually
+def flush_transaction():
+    """
+    Flush the current transaction so we don't read stale data
+
+    Use in long running processes to make sure fresh data is read from
+    the database.  This is a problem with MySQL and the default
+    transaction mode.  You can fix it by setting
+    "transaction-isolation = READ-COMMITTED" in my.cnf or by calling
+    this function at the appropriate moment
+    """
+    transaction.commit()
+
 
 def show_result(request, filename):
+    #TODO: Check for the case when a duplicate file is submitted, with a pre-existing Md5 sum
     """
     """
     # Parse the file
     if not Md5Log.objects.filter(file_name=filename+'.log'):
-        file = settings.MEDIA_ROOT + filename + '.log'
+        file = settings.MEDIA_ROOT + 'benchmarkLogs/' + filename + '.log'
         parser_obj = Parser(file)
         parser_obj.run()
+    flush_transaction()
+    #transaction.enter_transaction_management()
+    #transaction.
     time.sleep(3)
+    while not Md5Log.objects.filter(file_name=filename+'.log'):
+        flush_transaction()
+        print Md5Log.objects.filter(file_name=filename+'.log')
+        flush_transaction()
+        continue
     data_dict = {
     }
     #Query the database for Benchmark data from benchmark_logs table
