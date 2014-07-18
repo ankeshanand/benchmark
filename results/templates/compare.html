@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Benchmark Result</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.axislabels.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.categories.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.tooltip.min.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap-yeti.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/style-result-custom.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Start navbar-->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+         <a class="navbar-brand" rel="home" href="#" title="BRL-CAD Benchmarks">
+            <!--img style="height:40px; margin-top: -10px;"
+             src="http://cpp-tricks.com/brlcad/images/logo_70.png"-->BRL-CAD Benchmarks
+         </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="">About</a>
+            </li>
+            <li class="active">
+              <a href="">Analytics</a>
+            </li>
+              <li>
+              <a href="../upload/">Upload</a>
+            </li>
+              <li>
+              <a href="">Docs</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </div> <!-- end navbar -->
+
+    <form action="/your-name/" method="post" style="margin-top: 50px;">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+
+</body>
+</html>
+
+
