@@ -1,7 +1,9 @@
 # Create your views here.
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
+from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from libs.parser import Parser
+from forms import ComparisonFilterForm
 import os
 import settings
 import time
@@ -69,6 +71,25 @@ def show_result(request, filename):
     data_dict['Rt_World'] = file_obj.benchmark.rtworld_set.all()[0].abs_rps
 
     return render_to_response('result.html', data_dict, context_instance=RequestContext(request))
+
+
+def compare_result(request, filename):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ComparisonFilterForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ComparisonFilterForm()
+
+    return render(request, 'compare.html', {'form': form})
 
 
 
