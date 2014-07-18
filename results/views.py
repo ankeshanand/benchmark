@@ -9,6 +9,7 @@ import settings
 import time
 from plots.models import Md5Log, BenchmarkLogs, MachineInfo, RtAverage, RtMoss, RtBldg391, RtM35, RtSphflake, RtWorld, RtStar
 from django.db import transaction
+from django.db.models import Avg
 
 @transaction.commit_manually
 def flush_transaction():
@@ -81,15 +82,28 @@ def compare_result(request, filename):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            # ...
+            data_dict = {'AverageVGR': MachineInfo.objects.
+                                    filter(ostype=form.cleaned_data['os']).
+                                    filter(processors=form.cleaned_data['n_processors']).
+                                    filter(vendor_id=form.cleaned_data['processor_family']).
+                                    filter(model_name=form.cleaned_data['processor_model']).
+                                    aggregate(Avg('benchmark__approx_vgr'))['benchmark__approx_vgr__avg']}
+            file_obj = Md5Log.objects.filter(file_name=filename+'.log')[0]
+            data_dict['VGR_Rating'] = file_obj.benchmark.approx_vgr
+            data_dict['filename'] = filename
+
             # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
+            return render(request, 'compare.html', {'form': form, 'data_dict': data_dict})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ComparisonFilterForm()
+        data_dict = {'AverageVGR': BenchmarkLogs.objects.all().aggregate(Avg('approx_vgr'))['approx_vgr__avg']}
+        file_obj = Md5Log.objects.filter(file_name=filename+'.log')[0]
+        data_dict['VGR_Rating'] = file_obj.benchmark.approx_vgr
+        data_dict['filename'] = filename
 
-    return render(request, 'compare.html', {'form': form})
+    return render(request, 'compare.html', {'form': form, 'data_dict': data_dict})
 
 
 
