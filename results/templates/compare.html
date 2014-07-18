@@ -50,10 +50,14 @@
       </div>
     </div> <!-- end navbar -->
 
-    <form action="/your-name/" method="post" style="margin-top: 50px;">
+    <form action="/result/compare/{{ data_dict.filename }}/" method="post" style="margin-top: 50px;">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />
+
+        Average: {{ data_dict.AverageVGR }}
+        <hr>
+        Yours: {{ data_dict.VGR_Rating }}
 </form>
 
 </body>
