@@ -49,16 +49,48 @@
         </div>
       </div>
     </div> <!-- end navbar -->
+    <div class="container">
+        <div class="page-header" id="banner">
+            <div class="row">
+              <div class="col-md-8">
+                <h1>Benchmark Result Comparison</h1>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+            <div class="col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
+            <form action="/result/compare/{{ data_dict.filename }}/" method="post" style="margin-top: 50px;">
+            {% csrf_token %}
+            {% load bootstrap %}
+            {{ form|bootstrap }}
+            <button class="btn-primary btn-lg" type="submit" value="Submit">Filter</button>
+            </form>
+            </div>
 
-    <form action="/result/compare/{{ data_dict.filename }}/" method="post" style="margin-top: 50px;">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
+                <div class="col-md-3">
+                 <div class="panel panel-primary dash-unit">
 
-        Average: {{ data_dict.AverageVGR }}
-        <hr>
-        Yours: {{ data_dict.VGR_Rating }}
-</form>
+                      <div class="panel-body">
+                        <h1 style="font-weight: bold;"> {{ data_dict.VGR_Rating }} </h1>
+                        <p>YOUR VGR RATING</p>
+                        <a href="#" class="dash-unit-footer">More Info</a>
+                      </div>
+                 </div>
+                 </div>
+                 <div class="col-md-2"></div>
+                 <div class="col-md-3">
+                 <div class="panel panel-primary dash-unit">
+
+                      <div class="panel-body">
+                        <h1 style="font-weight: bold;"> {{ data_dict.AverageVGR }} </h1>
+                        <p>AVERAGE VGR RATING</p>
+                        <a href="#" class="dash-unit-footer">More Info</a>
+                      </div>
+                 </div>
+             </div>
+             </div>
+            </div>
+
 
 </body>
 </html>
