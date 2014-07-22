@@ -73,7 +73,7 @@
                       <div class="panel-body">
                         <h1 style="font-weight: bold;"> {{ VGR_Rating }} </h1>
                         <p>VGR RATING</p>
-                        <a href="#" class="dash-unit-footer">More Info</a>
+                        <a href="#" class="dash-unit-footer" data-toggle="modal" data-target="#VGRModal">More Info</a>
                       </div>
                  </div>
              </div>
@@ -83,7 +83,7 @@
                       <div class="panel-body">
                         <h1 style="font-weight: bold;"> {{ Log_VGR }} </h1>
                         <p>LOG VGR</p>
-                        <a href="#" class="dash-unit-footer">More Info</a>
+                        <a href="#" class="dash-unit-footer" data-toggle="modal" data-target="#LogVGRModal">More Info</a>
                       </div>
                  </div>
              </div>
@@ -163,6 +163,43 @@
                  </div>
              </div>
         </div>
+    <!-- VGR Modal -->
+<div class="modal fade" id="VGRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">VGR Rating</h4>
+      </div>
+      <div class="modal-body">
+           These numbers seem to indicate that this machine is approximately {{ VGR_Rating }} times
+faster than the reference machine being used for comparison, a VAX 11/780
+running 4.3 BSD named VGR.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Log VGR Modal -->
+<div class="modal fade" id="LogVGRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Log VGR Rating</h4>
+      </div>
+      <div class="modal-body">
+           These results are approximately {{ Log_VGR }} orders of magnitude faster than the reference.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart.js"></script>
 <script>

@@ -73,7 +73,7 @@
                       <div class="panel-body">
                         <h1 style="font-weight: bold;"> {{ data_dict.VGR_Rating }} </h1>
                         <p>YOUR VGR RATING</p>
-                        <a href="#" class="dash-unit-footer">More Info</a>
+                        <a href="#" class="dash-unit-footer" data-toggle="modal" data-target="#VGRModal">More Info</a>
                       </div>
                  </div>
                  </div>
@@ -84,12 +84,49 @@
                       <div class="panel-body">
                         <h1 style="font-weight: bold;"> {{ data_dict.AverageVGR|floatformat:2 }} </h1>
                         <p>AVERAGE VGR RATING</p>
-                        <a href="#" class="dash-unit-footer">More Info</a>
+                        <a href="#" class="dash-unit-footer" data-toggle="modal" data-target="#AvgVGRModal">More Info</a>
                       </div>
                  </div>
              </div>
              </div>
             </div>
+        <!-- VGR Modal -->
+<div class="modal fade" id="VGRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">VGR Rating</h4>
+      </div>
+      <div class="modal-body">
+           These numbers seem to indicate that this machine is approximately {{ data_dict.VGR_Rating }} times
+faster than the reference machine being used for comparison, a VAX 11/780
+running 4.3 BSD named VGR.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Average VGR Modal -->
+<div class="modal fade" id="AvgVGRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Average VGR Rating</h4>
+      </div>
+      <div class="modal-body">
+           It represents the average VGR Rating from the filtered logs.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </body>
