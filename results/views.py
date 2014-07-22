@@ -10,6 +10,7 @@ import time
 from plots.models import Md5Log, BenchmarkLogs, MachineInfo, RtAverage, RtMoss, RtBldg391, RtM35, RtSphflake, RtWorld, RtStar
 from django.db import transaction
 from django.db.models import Avg
+from datetime import datetime, timedelta, date
 
 @transaction.commit_manually
 def flush_transaction():
@@ -82,7 +83,8 @@ def compare_result(request, filename):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            data_dict = {'AverageVGR': MachineInfo.objects.
+            objs_filtered_bydate = filter_by_date(form.cleaned_data['date_submitted'])
+            data_dict = {'AverageVGR': objs_filtered_bydate.
                                     filter(ostype=form.cleaned_data['os']).
                                     filter(processors=form.cleaned_data['n_processors']).
                                     filter(vendor_id=form.cleaned_data['processor_family']).
@@ -106,4 +108,15 @@ def compare_result(request, filename):
     return render(request, 'compare.html', {'form': form, 'data_dict': data_dict})
 
 
-
+def filter_by_date(date_filter):
+    if date_filter == 'this_month':
+        return MachineInfo.objects.filter(benchmark__time_of_execution__month=date.today().month)
+    if date_filter == 'this_year':
+        return MachineInfo.objects.filter(benchmark__time_of_execution__year=date.today().year)
+    if date_filter == 'all_time':
+        return MachineInfo.objects.all()
+    if date_filter == 'this_week':
+        today = date.today()
+        start_week = today - timedelta(today.weekday())
+        end_week = start_week + timedelta(7)
+        return MachineInfo.objects.filter(benchmark__time_of_execution__range=[start_week, end_week])
