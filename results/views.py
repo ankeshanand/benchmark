@@ -72,6 +72,7 @@ def show_result(request, filename):
     data_dict['Rt_Star'] = file_obj.benchmark.rtstar_set.all()[0].abs_rps
     data_dict['Rt_World'] = file_obj.benchmark.rtworld_set.all()[0].abs_rps
 
+    data_dict['filename'] = filename
     return render_to_response('result.html', data_dict, context_instance=RequestContext(request))
 
 
