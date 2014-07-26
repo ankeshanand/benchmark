@@ -2,7 +2,7 @@ install: bin/python
 
 bin/python:
 	virtualenv .
-	bin/python setup.py develop
+	bin/pip -r requirements.txt
 
 serve: bin/python
 	bin/python manage.py runserver 8888
