@@ -58,14 +58,14 @@ class bp_logger(object):
             
             config = ConfigParser()
             try :
-                config.read(['../config'])
+                config.read(['../project_config'])
             except ConfigParser.NoSectionError, e:
                 os.chdir('libs/')
                 config.read(['../config'])
                 os.chdir('../')
             
             os.chdir('libs/')
-            config.read(['../config'])
+            config.read(['../project_config'])
             os.chdir('../')
             
             # Open the log file in apend mode.
