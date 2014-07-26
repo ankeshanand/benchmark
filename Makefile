@@ -12,4 +12,4 @@ deploy: bin/python
 	touch wsgi.py  # trigger reload
 
 clean:
-    rm -rf bin/ lib/ build/ dist/ *.egg-info/ include/ local/
+	rm -rf bin/ lib/ build/ dist/ *.egg-info/ include/ local/
