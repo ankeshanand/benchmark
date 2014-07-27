@@ -47,7 +47,7 @@ import _mysql_exceptions
 from ConfigParser import ConfigParser
 
 from libs.bp_logger import bp_logger
-
+import settings
 def get_connection():
     """
     Get the cursor for the MySQL connection.
@@ -60,7 +60,7 @@ def get_connection():
 #        os.chdir('libs/')
 #        config.read(['../config'])
 #        os.chdir('../')
-#    os.chdir('libs/')
+    os.chdir(settings.SITE_ROOT+'libs/')
     config.read(['../project_config'])
     os.chdir('../')
 
