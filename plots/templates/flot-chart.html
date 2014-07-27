@@ -86,7 +86,7 @@
     var data = [{}];
 
     $(document).ready(function(){
-        $.getJSON("/plots/{{ plotname }}/data/", function(json){
+        $.getJSON("plots/{{ plotname }}/data/", function(json){
             if(json.chart_type == "bar"){
                 options.series.bars.show = true;
                 options.series.bars.barWidth = 0.3;
