@@ -38,7 +38,7 @@
               <a href="">Analytics</a>
             </li>
               <li>
-              <a href="/fabula/upload/">Upload</a>
+              <a href="/benchmark/upload/">Upload</a>
             </li>
               <li>
               <a href="">Docs</a>
@@ -59,7 +59,7 @@
           </div>
         <div class="row">
             <div class="col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
-            <form action="/fabula/result/compare/{{ data_dict.filename }}/" method="post" style="margin-top: 50px;">
+            <form action="/benchmark/result/compare/{{ data_dict.filename }}/" method="post" style="margin-top: 50px;">
             {% csrf_token %}
             {% load bootstrap %}
             {{ form|bootstrap }}

@@ -27,7 +27,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="">About</a> </li>
                 <li class="active"><a href="#">Upload</a></li>
-                <li><a href="/fabula/plots/">Analytics</a></li>
+                <li><a href="/benchmark/plots/">Analytics</a></li>
                 <li><a href="">Docs</a></li>
             </ul>
         </div>
@@ -109,7 +109,7 @@ $(function () {
     var csrftoken = $.cookie('csrftoken');
     console.log(csrftoken);
     // Change this to the location of your server-side upload handler:
-    var url = '/fabula/upload/basic/plus/',
+    var url = '/benchmark/upload/basic/plus/',
         uploadButton = $('<button/>')
             .addClass('btn btn-primary')
             .prop('disabled', true)
@@ -193,7 +193,7 @@ $(function () {
             $(data.context.children()[index])
                 .wrap(link);
             window.location.href = window.location.protocol + "//" + window.location.host + "/"
-+'fabula/result/'+file.url.split('/').pop().slice(0,-4);
++'benchmark/result/'+file.url.split('/').pop().slice(0,-4);
             console.log(file.name);
             console.log(file.url.split('/').pop().slice(0,-4));
         });
