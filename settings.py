@@ -62,7 +62,7 @@ STATIC_ROOT = os.path.abspath(os.path.dirname(__file__)) + '/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'fabula/static/'
+STATIC_URL = '/fabula/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
