@@ -61,7 +61,7 @@ def get_connection():
 #        config.read(['../config'])
 #        os.chdir('../')
 #    os.chdir(settings.SITE_ROOT+'libs/')
-    config.read([settings.SITE_ROOT+'project_config'])
+    config.read([settings.SITE_ROOT+'/project_config'])
     os.chdir('../')
 
     connection = _mysql.connect(host=config.get("database", "host"), 
