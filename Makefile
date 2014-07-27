@@ -5,6 +5,7 @@ bin/python:
 	bin/pip install -r requirements.txt
 
 serve: bin/python
+	bin/python manage.py syncdb
 	bin/python manage.py runserver 8888
 
 deploy: bin/python
