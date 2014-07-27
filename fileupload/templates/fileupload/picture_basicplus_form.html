@@ -107,6 +107,7 @@ $.ajaxSetup({
 $(function () {
     'use strict';
     var csrftoken = $.cookie('csrftoken');
+    console.log(csrftoken);
     // Change this to the location of your server-side upload handler:
     var url = '/fabula/upload/basic/plus/',
         uploadButton = $('<button/>')
