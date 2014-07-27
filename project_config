@@ -1,8 +1,8 @@
 [database]
 host = localhost
-username = root
-password =
-database = benchmark_db
+username = anand
+password = Anand
+database = anand
 
 [locations]
 archives = ./archive
