@@ -60,7 +60,7 @@ def get_connection():
 #        os.chdir('libs/')
 #        config.read(['../config'])
 #        os.chdir('../')
-    os.chdir('libs/')
+#    os.chdir('libs/')
     config.read(['../project_config'])
     os.chdir('../')
 
