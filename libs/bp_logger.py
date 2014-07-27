@@ -40,7 +40,7 @@ import os
 import logging
 
 from ConfigParser import ConfigParser
-
+import settings
 class bp_logger(object):
     '''
     A wrapper over the logging module of python.
@@ -57,15 +57,15 @@ class bp_logger(object):
         if bp_logger.logger == None :
             
             config = ConfigParser()
-            try :
-                config.read(['../project_config'])
+            try:
+                config.read([settings.SITE_ROOT+'/project_config'])
             except ConfigParser.NoSectionError, e:
                 os.chdir('libs/')
                 config.read(['../config'])
                 os.chdir('../')
             
-            os.chdir('libs/')
-            config.read(['../project_config'])
+            #os.chdir('libs/')
+            config.read([settings.SITE_ROOT+'/project_config'])
             os.chdir('../')
             
             # Open the log file in apend mode.
