@@ -20,8 +20,8 @@ def rawdata(request, plotname):
             print data_dict
             return HttpResponse(simplejson.dumps(data_dict), content_type="application/json")
         except AttributeError:
-            raise 404
-    raise 404
+            raise Http404
+    raise Http404
 
 
 def draw(request, plotname):
