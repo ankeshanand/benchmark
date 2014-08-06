@@ -1,6 +1,8 @@
 import os
 import sys
+import site
 
+site.addsitedir('/var/www/benchmark/lib/python2.7/site-packages')
 sys.path.append('/var/www')
 sys.path.append('/var/www/benchmark')
 
