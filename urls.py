@@ -1,6 +1,7 @@
 __author__ = 'ankesh'
 from django.conf.urls import patterns, include, url
 from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -10,7 +11,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'upload.views.home', name='home'),
 
-    url(r'^$', lambda x: HttpResponseRedirect('upload/')),
+    url(r'^$', TemplateView.as_view(template_name="home.html")),
     url(r'^upload/', include('fileupload.urls')),
     url(r'^plots/', include('plots.urls')),
     url(r'^result/', include('results.urls')),

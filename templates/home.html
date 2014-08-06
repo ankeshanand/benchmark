@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Benchmark Result</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
+    <link href="{{ STATIC_URL }}css/bootstrap-yeti.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/home-custom.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+<body>
+    <!-- Start navbar-->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+         <a class="navbar-brand active" rel="home" href="#" title="BRL-CAD Benchmarks">
+            <img style="height:40px; margin-top: -10px;"
+             src="http://beta.brlcad.org/wp/wp-content/themes/BRL-CAD/images/logo_70.png">BRL-CAD Benchmarks
+         </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/about/">About</a>
+            </li>
+            <li>
+              <a href="/plots/">Analytics</a>
+            </li>
+              <li>
+              <a href="/upload/">Upload</a>
+            </li>
+              <li>
+              <a href="">Docs</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </div> <!-- end navbar -->
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>BRL-CAD Benchmark Test</h1>
+                    <p>
+                        A cross-platform measure of your system's performance using BRL-CAD's advanced CPU intensive
+                        application of ray-tracing.
+                    </p>
+                    </br></br>
+                    <a class="btn btn-primary" href="/upload/">Upload your Benchmark Log Now</a>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <img src="{{ STATIC_URL }}img/placeit.png">
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+            <div class="row page-header">
+                <h2>Get Started</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row row-steps">
+                        <div class="col-md-1">
+                            <i class="fa fa-cloud-download fa-3x"></i>
+                        </div>
+                        <div class="col md-3">
+                            <p class="steps">Download BRL-CAD</p>
+                        </div>
+                    </div>
+                    <div class="row row-steps">
+                        <div class="col-md-1">
+                            <i class="fa fa-play fa-3x"></i>
+                        </div>
+                        <div class="col md-3">
+                            <p class="steps">Run the Benchmark executable</p>
+                        </div>
+                    </div>
+                    <div class="row row-steps">
+                        <div class="col-md-1">
+                            <i class="fa fa-cloud-upload fa-3x"></i>
+                        </div>
+                        <div class="col md-3">
+                            <p class="steps">Upload your benchamark log.</p>
+                        </div>
+                    </div>
+                    <div class="row row-steps">
+                        <div class="col-md-1">
+                            <i class="fa fa-tachometer fa-3x"></i>
+                        </div>
+                        <div class="col md-3">
+                            <p class="steps"> View, Compare and Share your results</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
