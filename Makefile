@@ -2,7 +2,7 @@ install: bin/python
 
 bin/python:
 	virtualenv benchmarkenv
-	source ./benchmarkenv/bin/activate
+	. ./benchmarkenv/bin/activate
 	bin/pip install -r requirements.txt
 
 serve: bin/python
