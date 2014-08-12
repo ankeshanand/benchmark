@@ -11,7 +11,7 @@ serve: bin/python
 
 deploy: benchmarkenv/bin/python
 	benchmarkenv/bin/python manage.py collectstatic --clear --noinput
-	touch wsgi.py  # trigger reload
+	touch wsgi.py # trigger reload
 
 clean:
 	rm -rf bin/ lib/ build/ dist/ *.egg-info/ include/ local/
