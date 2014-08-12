@@ -10,7 +10,7 @@ serve: bin/python
 	benchmarkenv/bin/python manage.py runserver 8888
 
 deploy: bin/python
-	benchamrkenv/bin/python manage.py collectstatic --clear --noinput
+	bin/python manage.py collectstatic --clear --noinput
 	touch wsgi.py  # trigger reload
 
 clean:
