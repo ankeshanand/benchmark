@@ -121,3 +121,9 @@ def filter_by_date(date_filter):
         start_week = today - timedelta(today.weekday())
         end_week = start_week + timedelta(7)
         return MachineInfo.objects.filter(benchmark__time_of_execution__range=[start_week, end_week])
+
+
+def recent_results(request):
+    results_list = BenchmarkLogs.objects.all().order_by('-time_of_execution')
+    return render(request, 'recent_results.html', {'results': results_list})
+
