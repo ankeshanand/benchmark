@@ -94,7 +94,7 @@ def archive_file(path):
     Should change the naming scheme in archives.
     """    
     config = ConfigParser()
-    config.read(['../config'])
+    config.read(['../project_config'])
     
     
     # shutil is the safest way to move files

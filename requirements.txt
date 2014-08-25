@@ -1,3 +1,5 @@
-django<1.6
+django==1.5.8
 pillow
 mysql-python
+django-bootstrap-form
+django-tastypie

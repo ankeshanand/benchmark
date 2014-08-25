@@ -4,11 +4,11 @@
 <!-- Force latest IE rendering engine or ChromeFrame if installed -->
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 <meta charset="utf-8">
-<title>BRL-CAD Benchmarks|Upload Logs</title>
+<title>BRL-CAD Benchmarks | Upload Logs</title>
 <meta name="description" content="Upload your BRL-CAD Benchmark Logs. File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap styles -->
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-flat.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-yeti.css">
 <!-- Generic page styles -->
 <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
@@ -18,13 +18,16 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="">BRL-CAD Benchmarks</a>
+            <a class="navbar-brand" rel="home" href="#" title="BRL-CAD Benchmarks">
+            <img style="height:40px; margin-top: -10px;"
+             src="http://beta.brlcad.org/wp/wp-content/themes/BRL-CAD/images/logo_70.png">BRL-CAD Benchmarks
+         </a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="">About</a> </li>
                 <li class="active"><a href="#">Upload</a></li>
-                <li><a href="../../../plots/">Analytics</a></li>
+                <li><a href="/benchmark/plots/">Analytics</a></li>
                 <li><a href="">Docs</a></li>
             </ul>
         </div>
@@ -98,11 +101,15 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+$.ajaxSetup({
+  data: {csrfmiddlewaretoken: '{{ csrf_token }}' }
+});
 $(function () {
     'use strict';
     var csrftoken = $.cookie('csrftoken');
+    console.log(csrftoken);
     // Change this to the location of your server-side upload handler:
-    var url = '/upload/basic/plus/',
+    var url = '/benchmark/upload/basic/plus/',
         uploadButton = $('<button/>')
             .addClass('btn btn-primary')
             .prop('disabled', true)
@@ -185,6 +192,10 @@ $(function () {
                 .prop('href', file.url);
             $(data.context.children()[index])
                 .wrap(link);
+            window.location.href = window.location.protocol + "//" + window.location.host + "/"
++'benchmark/result/'+file.url.split('/').pop().slice(0,-4);
+            console.log(file.name);
+            console.log(file.url.split('/').pop().slice(0,-4));
         });
     }).on('fileuploadfail', function (e, data) {
         $.each(data.result.files, function (index, file) {

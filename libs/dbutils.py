@@ -47,7 +47,7 @@ import _mysql_exceptions
 from ConfigParser import ConfigParser
 
 from libs.bp_logger import bp_logger
-
+import settings
 def get_connection():
     """
     Get the cursor for the MySQL connection.
@@ -60,15 +60,15 @@ def get_connection():
 #        os.chdir('libs/')
 #        config.read(['../config'])
 #        os.chdir('../')
-#    os.chdir('libs/')
-    config.read(['../config'])
-    os.chdir('../')    
-        
+#    os.chdir(settings.SITE_ROOT+'libs/')
+    config.read([settings.SITE_ROOT+'/project_config'])
+    os.chdir('../')
+
     connection = _mysql.connect(host=config.get("database", "host"), 
                                  user=config.get("database", "username"), 
                                  passwd=config.get("database", "password"), 
                                  db=config.get("database", "database"))
-    
+
     return connection
 
 
@@ -80,7 +80,7 @@ def db_insert(conn, query):
     @param query: Query string to be executed
     """
     logger = bp_logger('dbutils')
-    
+
     try :
         conn.query(query)
     except _mysql_exceptions.ProgrammingError as (errno, strerror) :
@@ -131,6 +131,9 @@ def check_if_file_exists_in_db(conn, md5sum):
             """.format(md5sum)
     
     return int(db_select(conn, query)[0][0])
+
+def close_connection(conn):
+    _mysql.connection.close(conn)
 
 # Local Variables:
 # mode: python

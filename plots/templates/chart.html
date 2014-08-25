@@ -37,7 +37,7 @@ $(function () {
         series: [{}]
     };
 
-   $.getJSON('/plots/{{ plotname }}/data/',function(data){
+   $.getJSON('plots/{{ plotname }}/data/',function(data){
        options.chart.type = data.chart_type;
        options.series[0].data = data.values;
        options.xAxis.categories = data.categories;
