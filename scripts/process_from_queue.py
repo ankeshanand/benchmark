@@ -52,8 +52,8 @@ def process():
     Process the files in the queue directory.
     """
     config = ConfigParser()
-    config.read(['../config'])
-    
+    config.read(['../project_config'])
+
     for filename in os.listdir(config.get("locations", "queue")) :
         parser_obj = Parser(os.path.join(config.get("locations", "queue"), filename))
         parser_obj.run()
@@ -61,11 +61,11 @@ def process():
 
 if __name__ == '__main__':
     process()
-    
+
 # Local Variables:
 # mode: python
 # tab-width: 8
 # python-indent-offset: 4
 # indent-tabs-mode: t
 # End:
-# ex: shiftwidth=4 tabstop=8 
+# ex: shiftwidth=4 tabstop=8
