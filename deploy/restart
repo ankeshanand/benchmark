@@ -1,0 +1,4 @@
+#!/bin/sh
+source env/bin/activate
+python manage.py collectstatic --clear --noinput
+touch wsgi.py # trigger reload

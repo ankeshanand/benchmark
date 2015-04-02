@@ -6,7 +6,7 @@ Originally forked from [here](http://bitbucket.org/suryajith/benchmark/)
 
 ## Screenshots
 
-![Hi There](http://i.imgur.com/BDKsKVJ.png "Result of a Benchmark Run")
+![Hi There](http://i.imgur.com/zmhV8Sk.png "Result of a Benchmark Run")
 
 Result of a Benchmark Run
 
