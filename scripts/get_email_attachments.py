@@ -49,7 +49,7 @@ sys.path.append("../")
 
 import libs.util as util
 import libs.dbutils as dbutils
-import libs.imaputils as imaputils 
+import libs.imaputils as imaputils
 
 from libs.bp_logger import bp_logger
 
@@ -59,43 +59,43 @@ def main():
     """
     Main
     """
-    
+
     logger = bp_logger('GET_EMAIL_ATTACHMENTS')
-    
+
     config = ConfigParser()
-    config.read(['../config'])
-    
+    config.read(['../project_config'])
+
     imap_server = imaputils.get_imapserv_conn()
-    
+
     connection = dbutils.get_connection()
-    
-    # This lists out the list of all the 
+
+    # This lists out the list of all the
     msg, emails = imap_server.search(None, "(UNSEEN)")
     # print emails
-    
-    
-    # Go through each of the ids given out by IMAP 
+
+
+    # Go through each of the ids given out by IMAP
     for email_id in emails[0].split() :
-        
+
         attachments = imaputils.get_attachment(imap_server, email_id)
-        
+
         for filename, content in attachments.items() :
-            
+
             # Filename has to match the required pattern.
             if re.search("run-[0-9]+-benchmark.log", filename) == None :
                 logger.debug("The filename {:s} did not match the needed pattern. IMAP id : {:d}".format(filename, int(email_id)))
                 continue
-            
-            
+
+
             filelocation = os.path.join(config.get("locations", "queue"), filename)
-            
+
             md5 = hashlib.md5()
             md5.update(content)
             md5_hash = md5.hexdigest()
-            filelocation = filelocation + '.' + md5_hash 
-            
-            
-            #  
+            filelocation = filelocation + '.' + md5_hash
+
+
+            #
             if util.check_if_file_exists_on_disk(filelocation) :
                 logger.debug("The file {:s} exists on the disk.".format(filelocation))
                 continue
@@ -104,28 +104,28 @@ def main():
                 file_queue.write(content)
                 logger.info("The file {:s} has been written to the disk.".format(filelocation))
                 file_queue.close()
-            
+
             # Add code to write it to the db
             query = """
                     INSERT INTO email_logs (`imap_id`, `md5`, `time`)
-                    VALUES ({:d}, \"{:s}\", NOW()) 
+                    VALUES ({:d}, \"{:s}\", NOW())
                     """.format(int(email_id), md5_hash)
-                    
+
             hw_id = dbutils.db_insert(connection, query)
-            
+
             if hw_id == None :
-                logger.error("The query \n {:s} has not been inserted.".format(query))            
-        
+                logger.error("The query \n {:s} has not been inserted.".format(query))
 
 
-        
+
+
 if __name__ == '__main__':
     main()
-    
+
 # Local Variables:
 # mode: python
 # tab-width: 8
 # python-indent-offset: 4
 # indent-tabs-mode: t
 # End:
-# ex: shiftwidth=4 tabstop=8     
+# ex: shiftwidth=4 tabstop=8

@@ -44,45 +44,45 @@ import urllib2
 from ConfigParser import ConfigParser
 
 def main() :
-    
+
     if len(sys.argv) == 2 :
         filename = sys.argv[1]
-        
+
         config = ConfigParser()
-        config.read(['../config'])
-        
+        config.read(['../project_config'])
+
         url = config.get("locations", "api_url")
-        
+
         content = open(filename, 'r').read()
         filename_clean = filename.split('/')[-1]
-        
+
         values = {'action' : 'benchmark',
                   'filename' : filename_clean,
                   'content' : content,
                   'format' : 'xml',
                   }
-        
+
         data = urllib.urlencode(values)
         req = urllib2.Request(url, data)
         response = urllib2.urlopen(req)
         print response.read()
-        
-        
+
+
     else :
         print "Usage: python benchmark_upload.py <relative-path-to-file>"
         sys.exit(1)
-        
-     
-    
+
+
+
 
 if __name__ == '__main__':
-    
+
     main()
-    
+
 # Local Variables:
 # mode: python
 # tab-width: 8
 # python-indent-offset: 4
 # indent-tabs-mode: t
 # End:
-# ex: shiftwidth=4 tabstop=8 
+# ex: shiftwidth=4 tabstop=8

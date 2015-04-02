@@ -33,8 +33,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 ###
-# 
-# This contains the utility functions needed to access the IMAP 
+#
+# This contains the utility functions needed to access the IMAP
 # server.
 
 __author__ = 'Suryajith Chillara'
@@ -47,19 +47,19 @@ from ConfigParser import ConfigParser
 
 def get_imapserv_conn():
     """
-    Return the connection to an imap server and 
+    Return the connection to an imap server and
     choose the default mailbox as INBOX.
     """
     config = ConfigParser()
-    config.read(['../config'])
-    
+    config.read(['../project_config'])
+
     imap_server = imaplib.IMAP4_SSL(config.get("imap_credentials", "imap_server"),
                                     config.get("imap_credentials", "imap_port"))
-    imap_server.login(config.get("imap_credentials", 'username'), 
+    imap_server.login(config.get("imap_credentials", 'username'),
                       config.get("imap_credentials", 'password'))
 
     imap_server.select('INBOX')
-    
+
     return imap_server
 
 
@@ -68,28 +68,28 @@ def get_attachment(imap_server, email_id):
     """
     Get attachments and return as a dictionary.
     """
-    
+
     attachments = {}
     msg, data = imap_server.fetch(email_id, "(RFC822)")
     # Convert the message
     email_body = email.message_from_string(data[0][1])
-    
+
     # Walk through the sections of the code
     for section in email_body.walk() :
         if section.get_content_maintype() == 'multipart':
             continue
         if section.get('Content-Disposition') is None:
             continue
-        
+
         # Get the filename of the attachment
         filename = section.get_filename()
-        
+
         # Get the content of the attachment
         content = section.get_payload(decode=True)
-        
+
         attachments[filename] = content
-        
-    
+
+
     return attachments
 
 # Local Variables:
